@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require(path.join(__dirname, 'routes', 'userRoutes'));
 const postRoutes = require('./routes/postRoutes');
 const ratingRoutes = require('./routes/ratingRoutes');
 const db = require('../config/db');
