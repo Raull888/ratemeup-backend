@@ -1,13 +1,15 @@
 {
-  "name": "your-project-name",
+  "name": "ratemeup-backend",
   "version": "1.0.0",
-  "description": "A description of your project",
-  "main": "index.js",
+  "description": "Backend para la red social RateMeUp",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "dependencies": {},
-  "devDependencies": {},
-  "author": "Your Name",
-  "license": "MIT"
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3"
+  }
 }
