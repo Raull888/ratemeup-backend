@@ -1,22 +1,23 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { createUser, findUserByUsername } = require('../backend/models/User');
+const users = []; // Temporal, luego será con base de datos
 
-const register = async (req, res) => {
-  const { username, password } = req.body;
-  const hashed = await bcrypt.hash(password, 10);
-  const user = await createUser(username, hashed);
-  res.json(user);
+const registerUser = (req, res) => {
+  const { username, email } = req.body;
+  const newUser = { id: users.length + 1, username, email };
+  users.push(newUser);
+  res.status(201).json(newUser);
 };
 
-const login = async (req, res) => {
-  const { username, password } = req.body;
-  const user = await findUserByUsername(username);
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ message: 'Credenciales inválidas' });
-  }
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-  res.json({ token });
+const loginUser = (req, res) => {
+  const { email } = req.body;
+  const user = users.find(u => u.email === email);
+  if (user) return res.json(user);
+  res.status(404).json({ message: 'Usuario no encontrado' });
 };
 
-module.exports = { register, login };
+const getUserProfile = (req, res) => {
+  const user = users.find(u => u.id === parseInt(req.params.id));
+  if (user) return res.json(user);
+  res.status(404).json({ message: 'Perfil no encontrado' });
+};
+
+module.exports = { registerUser, loginUser, getUserProfile };
